@@ -9,7 +9,7 @@ public class Jugador {
     private Partida darreraPartida;
     private ArrayList<Partida> partides;
     private int guanyades = 0;
-     private int numPartidesPersistents;
+    private int numPartidesPersistents;
 
 
     public Jugador(String nom) {

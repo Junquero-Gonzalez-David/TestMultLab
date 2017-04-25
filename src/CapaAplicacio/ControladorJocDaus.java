@@ -2,6 +2,7 @@ package CapaAplicacio;
 
 import CapaDomini.Dau;
 import CapaDomini.Jugador;
+import CapaPersistencia.JugadorBBDD;
 
 public class ControladorJocDaus {
 
@@ -48,4 +49,11 @@ public class ControladorJocDaus {
     public String resultatPartides() {
         return jugador.resultatPartides();
     }   	
+    public void guardarJugador(){
+    	try {
+			JugadorBBDD.storeJugador(jugador);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    }
 }
