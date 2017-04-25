@@ -11,11 +11,12 @@ public class ControladorJocDaus {
     private Jugador jugador;
  
     public ControladorJocDaus() {
+    	
         dau1 = new Dau(CARES_DAUS);
         dau2 = new Dau(CARES_DAUS);
-        jugador = new Jugador("Anonim");       
+        jugador = new Jugador("Anonim"); 
     }
-
+ 
     public void jugar() {
         int tirada1 = this.tirarDau(dau1);
         int tirada2 = this.tirarDau(dau2);
@@ -40,9 +41,15 @@ public class ControladorJocDaus {
     }
 
     public void nouJugador(String nom) throws Exception {
-        //Si el nom és "Anonim" no cal fer res
         if (!nom.equalsIgnoreCase("Anonim")) {          
                jugador = new Jugador(nom);            
+        }       
+        else{
+        	jugador = JugadorBBDD.getJugador(nom);
+        	if (jugador == null){
+        		jugador = new Jugador(nom);
+        		JugadorBBDD.storeJugador(jugador);
+        	}
         }
     }
 

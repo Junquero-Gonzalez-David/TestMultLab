@@ -33,8 +33,7 @@ public class JugadorBBDD implements Connection{
 		}
 	}
 	
-	public static Jugador getJugador(Jugador jugador) throws Exception{
-			String name = jugador.getNom();
+	public static Jugador getJugador(String name) throws Exception{
 			init();
 			String sql = "SELECT * FROM JUGADOR WHERE NOM=?";
 			PreparedStatement preparedStatement = connection.preapareStatement(sql);
