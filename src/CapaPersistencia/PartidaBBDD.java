@@ -22,6 +22,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 
+import CapaDomini.Jugador;
 import CapaDomini.Partida;
 
 public class PartidaBBDD implements Connection{
@@ -34,9 +35,9 @@ public class PartidaBBDD implements Connection{
 		}
 	}
 	
-	public static List<Partida> getPartida(String name) throws Exception{
-		
-			List<Partida> col = new ArrayList();
+	public static List<Partida> getPartida(Jugador jugador) throws Exception{
+			String name = jugador.getNom();
+			List<Partida> col = new ArrayList<Partida>();
 			
 			init();
 			String sql = "SELECT * FROM PARTIDA WHERE NOM=?";
@@ -46,10 +47,13 @@ public class PartidaBBDD implements Connection{
 			try{
 				ResultSet rs = preparedStatement.executeQuery();
 				while (rs.next()){
-					int d1, d2;
-					d1 = rs.getInt("DAU1");
-					d2 = rs.getInt("DAU2");
-					col.add(new Partida(d1,d2));
+					String d1;
+					int d2, d3, d4;
+					d1 = rs.getString("NOM");
+					d2 = rs.getInt("DAU1");
+					d3 = rs.getInt("DAU2");
+					d4 = rs.getInt("IDPARTIDA");
+					col.add(new Partida(jugador,d2,d3,d4));
 				}
 				
 			}
@@ -66,9 +70,10 @@ public class PartidaBBDD implements Connection{
 		String sql = "INSERT INTO PARTIDA VALUES (?,?,?)";
 		PreparedStatement preparedStatement = connection.preapareStatement(sql);
 		preparedStatement.clearParameters();
-		preparedStatement.setInt(1, partida.getDau1());
-		preparedStatement.setInt(2, partida.getDau2());
-		// TODO: Store name
+		preparedStatement.setString(1, partida.getJugador().getNom());
+		preparedStatement.setInt(2, partida.getDau1());
+		preparedStatement.setInt(3, partida.getDau2());
+		preparedStatement.executeQuery();
 	}
 
 	@Override

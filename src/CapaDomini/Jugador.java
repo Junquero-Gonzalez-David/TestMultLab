@@ -9,7 +9,7 @@ public class Jugador {
     private Partida darreraPartida;
     private ArrayList<Partida> partides;
     private int guanyades = 0;
-    private int numPartidesPersistents;
+    private static int numPartidesPersistents;
 
 
     public Jugador(String nom) {
@@ -36,11 +36,12 @@ public class Jugador {
     }
 
     public void addPartida(int dau1, int dau2) {
-        darreraPartida = new Partida(dau1, dau2);
+    	numPartidesPersistents++;
+        darreraPartida = new Partida(this,dau1, dau2,numPartidesPersistents);
         this.desarDarreraPartida();
         this.actualitzarGuanyades();
     }
-
+    
     public String resultatPartidaEnCurs() {
         return darreraPartida.toString();
     }
@@ -73,7 +74,7 @@ public class Jugador {
        return numPartidesPersistents;
     }
 
-    public void setNumPartidesPersistents(int numPartides) {
+    public static void setNumPartidesPersistents(int numPartides) {
        numPartidesPersistents = numPartides;
     }
 }

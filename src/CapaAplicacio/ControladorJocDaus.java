@@ -9,9 +9,10 @@ public class ControladorJocDaus {
     private Dau dau1, dau2;
     private final int CARES_DAUS = 6;
     private Jugador jugador;
- 
+   	
     public ControladorJocDaus() {
     	
+    	Jugador.setNumPartidesPersistents(JugadorBBDD.partidesPersistents());
         dau1 = new Dau(CARES_DAUS);
         dau2 = new Dau(CARES_DAUS);
         jugador = new Jugador("Anonim"); 

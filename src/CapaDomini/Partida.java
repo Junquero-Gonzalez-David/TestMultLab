@@ -3,12 +3,12 @@ package CapaDomini;
 public class Partida {
 
     private int dau1, dau2;
-
-    public Partida() {
-        dau1 = dau2 = 0;
-    }
-
-    public Partida(int d1, int d2) {
+    private Jugador jugador;
+    private int id;
+    
+    public Partida(Jugador jugador,int d1, int d2,int id) {
+    	this.jugador = jugador;
+    	this.id = id;
         dau1 = d1;
         dau2 = d2;
     }
@@ -36,4 +36,5 @@ public class Partida {
     public int getDau2() {
         return dau2;
     }
+    public Jugador getJugador(){return this.jugador;}
 }

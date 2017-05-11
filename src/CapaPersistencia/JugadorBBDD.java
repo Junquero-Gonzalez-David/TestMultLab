@@ -21,9 +21,9 @@ import java.util.Properties;
 import java.util.concurrent.Executor;
 
 import CapaDomini.Jugador;
+import CapaDomini.Partida;
 
 public class JugadorBBDD implements Connection{
-	private static Jugador jugador;
 	
 	private static ConnectionBBDD connection;
 	
@@ -32,7 +32,6 @@ public class JugadorBBDD implements Connection{
 			connection = new ConnectionBBDD();
 		}
 	}
-	
 	public static Jugador getJugador(String name) throws Exception{
 			init();
 			String sql = "SELECT * FROM JUGADOR WHERE NOM=?";
@@ -51,7 +50,31 @@ public class JugadorBBDD implements Connection{
 	
 	public static void storeJugador(Jugador jugador) throws Exception{
 		if(jugador==null) throw new Exception();
-		JugadorBBDD.jugador=jugador;
+		
+		init();
+		String sql = "INSERT INTO PARTIDA VALUES (?)";
+		PreparedStatement preparedStatement = connection.preapareStatement(sql);
+		preparedStatement.clearParameters();
+		preparedStatement.setString(1, jugador.getNom());
+		preparedStatement.executeQuery();
+	}
+	
+	public static int partidesPersistents(){
+
+		int total = -1;
+		
+		init();
+		String sql = "SELECT COUNT(*) AS total FROM PARTIDES";
+		try{
+		PreparedStatement preparedStatement = connection.preapareStatement(sql);
+			preparedStatement.clearParameters();
+			ResultSet rs = preparedStatement.executeQuery();
+			while (rs.next()){total = rs.getInt("total");}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return total;
 	}
 
 	@Override
